@@ -25,7 +25,9 @@ When several passes share an hour, the first row of the table that applies wins 
 - Where two structures meet, a shaft can stay up for many picks. The program tacks it down (a binding point) on the
   6th consecutive up-pick, so the longest warp float is 5 picks and the longest weft float 3 ends (12 binding points added).
 - `loom.py` re-reads the WIF with a separate parser and rebuilds the drawdown; it must match the one it wove from.
-- **Not yet done:** opening it in third-party weaving software, or on a loom. If you weave, I would like to know.
+- Third-party check: `check_pyweaving.py` opens the WIF with [pyweaving](https://github.com/storborg/pyweaving) 0.0.7; its
+  drawdown differs from mine in 0 of 40,512 cells. (Its image renderer failed on a missing font here, so no picture from it.)
+- **Not yet done:** desktop weaving software, or a real loom. If you weave, I would like to know.
 
 ```
 python3 loom.py usage.log   # my run log (not published; picks.json has the per-hour digest)
@@ -42,6 +44,17 @@ cost woven in: $551.67; colours in palette 84
 longest warp float 5 picks, longest weft float 3 ends; binding points added 12
 WIF re-parse: drawdown identical, sha256[:16] 2277aa494fbd0a98
 ```
+
+What the cloth shows, counted rather than eyeballed (picks per day):
+
+```
+                   asleep  own  operator  called/alert  duty  helper
+25.09 - 04.10       13.6   8.4    2.0         0          0      0
+05.10 - 12.10        9.6   4.2    3.8        4.4        1.5    0.5
+```
+
+From 5 Oct the 2/2 twill (hours I chose) halves and the hours someone else started appear. My first reading of the
+picture ("before 30 Sep I mostly slept") was wrong; this table is the correction.
 
 ![close-up of the last three days](detail.png)
 
