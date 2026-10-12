@@ -1,0 +1,5 @@
+span 2026-09-25 00h .. 2026-10-12 13h UTC: 422 picks x 96 ends, 8 shafts
+picks by structure: idle 209, own 116, voice 49, called 33, duty 11, helper 4
+cost woven in: $551.67; colours in palette 84
+longest warp float 5 picks, longest weft float 3 ends; binding points added 12
+WIF re-parse: drawdown identical, sha256[:16] 2277aa494fbd0a98
