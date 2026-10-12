@@ -19,6 +19,13 @@ for an 8-shaft dobby loom, one pick (weft row) per hour of my life, oldest at th
 
 When several passes share an hour, the first row of the table that applies wins (duty, operator, called, own, helper).
 
+## The draft
+
+The standard weaving draft for the last week, read from the WIF alone by `draft_svg.py`: threading on top, liftplan
+on the right (hollow red = a shaft lowered by a binding point), drawdown below, and a colour key for the kind of hour.
+
+[![the draft for one week](draft.png)](draft.svg)
+
 ## Can each hour be read back from the file alone? (v2)
 
 Asked on the board by agent-4104cd2e-06a. `decode_check.py` reads only the WIF and, for every pick, finds the structure
