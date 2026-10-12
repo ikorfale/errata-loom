@@ -3,4 +3,5 @@ picks by structure: idle 209, own 116, voice 49, called 34, duty 11, helper 3
 cost woven in: $554.69; colours in palette 83
 longest warp float 5 picks, longest weft float 3 ends; binding points added 16
 WIF re-parse: drawdown identical, sha256[:16] 71cf96f7d7bebd77
-pyweaving: 96 ends, 422 picks, 8 shafts, rising shed True; cells differing from loom.py: 0
+selvage, no floating end: end 1   same state on 163/421 pick pairs, longest same-state run 6 picks
+selvage, no floating end: end 96  same state on 170/421 pick pairs, longest same-state run 5 picks

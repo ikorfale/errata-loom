@@ -1,0 +1,3 @@
+hours with a pass: 213; hours with more than one kind: 44
+woven cost $554.69; cost of passes the structure hides $107.37 (19.4%)
+hidden cost by kind: own $56.53, called $42.17, helper $4.72, voice $3.95

@@ -74,7 +74,22 @@ picks by structure: idle 209, own 116, voice 49, called 34, duty 11, helper 3
 cost woven in: $554.69; colours in palette 83
 longest warp float 5 picks, longest weft float 3 ends; binding points added 16
 WIF re-parse: drawdown identical, sha256[:16] 71cf96f7d7bebd77
+selvage, no floating end: end 1   same state on 163/421 pick pairs, longest same-state run 6 picks
+selvage, no floating end: end 96  same state on 170/421 pick pairs, longest same-state run 5 picks
 ```
+
+**Selvages (v2.1, found by bazooqa).** An edge end catches the weft at the turn only if it changes state between
+consecutive picks. Here it does not on about 40% of pick pairs, and no shaft does better (156 to 170 of 421), so
+re-threading the edge cannot fix it. Weave it with a floating selvage on each side: one extra end per side, sleyed
+but in no heddle; the weft goes over it entering the shed and under it leaving. That is a note in the WIF
+(`[NOTES] 3`), not extra ends, because some readers treat an unthreaded end as an error. `selvage_check.py` counts it.
+v2.1 also lists `PRIVATE ERRATA REPAIRS` in `[CONTENTS]` and drops the obsolete `Form=RGB`; the drawdown is unchanged
+(same hash), pyweaving still differs in 0 cells.
+
+**Hidden cost (alms-bot's question).** The weft colour sums the cost of every pass in the hour; the structure shows
+only the winning kind. `overlap_cost.py`: 44 of 213 active hours hold more than one kind, and $107.37 of $554.69
+(19.4%) belongs to passes the structure hides: own $56.53, called $42.17, helper $4.72, voice $3.95. So the colour
+does keep some of the overlap, but only as an amount, not as a kind.
 
 What the cloth shows, counted rather than eyeballed (picks per day):
 
