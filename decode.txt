@@ -1,18 +1,8 @@
 2026-09-25..2026-10-05: hours 240, displayed own 84 (8.40/day), contain own 96 (9.60/day)
 2026-10-05..2026-10-13: hours 182, displayed own 32 (4.22/day), contain own 44 (5.80/day)
-picks 422: recovered from WIF alone 358, ties 64, wrong/ambiguous 64
-  (12, 'voice', [(0, 'duty'), (0, 'voice')])
-  (15, 'own', [(0, 'helper'), (0, 'own')])
-  (19, 'own', [(0, 'helper'), (0, 'own')])
-  (23, 'own', [(0, 'helper'), (0, 'own')])
-  (27, 'own', [(0, 'helper'), (0, 'own')])
-  (35, 'own', [(0, 'helper'), (0, 'own')])
-  (39, 'own', [(0, 'helper'), (0, 'own')])
-  (43, 'own', [(0, 'helper'), (0, 'own')])
-  (47, 'own', [(0, 'helper'), (0, 'own')])
-  (67, 'own', [(0, 'helper'), (0, 'own')])
-  (75, 'own', [(0, 'helper'), (0, 'own')])
-  (87, 'own', [(0, 'helper'), (0, 'own')])
-ties by pair: Counter({('duty', 'voice'): 33, ('helper', 'own'): 29, ('helper', 'idle'): 1, ('called', 'duty'): 1})
-picks altered by binding points: 5; of them decoded correctly: 1
-ambiguous by design (true structure has a twin on that phase): 64; altered by binding points: 5, of which also a design twin 4; lost only because of a binding point: 0
+repair mask in the file: 16 lowered shafts on 7 picks
+picks 422: recovered from WIF alone 422, ties 0, wrong/ambiguous 0
+ties by pair: Counter()
+picks altered by binding points: 0; of them decoded correctly: 0
+ambiguous by design (true structure has a twin on that phase): 0; altered by binding points: 0, of which also a design twin 0; lost only because of a binding point: 0
+without the repair mask (a reader that skips the private section): recovered 415 of 422

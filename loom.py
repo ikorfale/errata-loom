@@ -8,6 +8,7 @@ import collections, datetime as dt, hashlib, json, math, sys
 import numpy as np
 
 LOG = sys.argv[1] if len(sys.argv) > 1 else 'usage.log'
+UNTIL = dt.datetime.fromisoformat(sys.argv[2]) if len(sys.argv) > 2 else None   # last hour to weave, for a fixed span
 SHAFTS, ENDS_PER_HOUR, MAXFLOAT = 8, 4, 5
 
 # kind of pass -> structure. Priority when several passes share an hour: the first in this list wins.
@@ -24,8 +25,11 @@ def lift(struct, k):
     if struct == 'own':    return [x for x in s if (x - k) % 4 in (0, 1)]           # 2/2 twill, rising right
     if struct == 'voice':  return [x for x in s if (x - k) % 4 != 0]                # 3/1 twill, warp-faced
     if struct == 'called': return [x for x in s if (x + k) % 4 == 0]                # 1/3 twill, weft-faced, rising left
-    if struct == 'duty':   return [x for x in s if (x - (0, 2, 1, 3)[k % 4]) % 4 != 0]  # 3/1 broken twill (no diagonal)
-    if struct == 'helper': return [x for x in s if ((x - 1) // 2) % 2 == k % 2]     # 2/2 basket
+    # v2: every structure lifts a different set of shafts on every pick, so one pick (one hour) is readable alone.
+    # v1 used offsets (0, 2, 1, 3) here, equal to the 3/1 twill on picks 0 and 3 of the repeat, and a 2/2 basket for
+    # helper, equal to the 2/2 twill on pick 3: 64 of 422 hours could not be told apart from the WIF (decode_check.py).
+    if struct == 'duty':   return [x for x in s if (x - (1, 0, 3, 2)[k % 4]) % 4 != 0]  # 3/1 broken twill (no diagonal)
+    if struct == 'helper': return [x for x in s if (x - k - 1) % 4 == 0]               # 1/3 twill, rising right
     raise ValueError(struct)
 
 def hours():
@@ -37,6 +41,7 @@ def hours():
         kind = f[1].split(':')[0]
         cost = float(next((x.split('=')[1] for x in f if x.startswith('cost_usd=')), 0))
         h = t.replace(minute=0, second=0)
+        if UNTIL and h > UNTIL: continue
         per[h]['kinds'].add(kind); per[h]['cost'] += cost
     first = min(per).replace(hour=0); last = max(per)   # stop at the last logged hour: never weave the future
     out, h = [], first
@@ -96,7 +101,7 @@ def floats(dd):
 def write_wif(path, picks, threading, liftplan, warp_c, weft_c):
     pal = sorted(set(warp_c) | set(weft_c)); idx = {c: i + 1 for i, c in enumerate(pal)}
     L = ['[WIF]', 'Version=1.1', 'Date=April 20, 1997', 'Developers=wif@mhsoft.com', 'Source Program=errata loom.py',
-         'Source Version=1', '', '[CONTENTS]']
+         'Source Version=2', '', '[CONTENTS]']
     L += [f'{k}=true' for k in ('COLOR PALETTE', 'TEXT', 'WEAVING', 'WARP', 'WEFT', 'COLOR TABLE', 'THREADING',
                                  'LIFTPLAN', 'WARP COLORS', 'WEFT COLORS', 'NOTES')]
     L += ['', '[TEXT]', 'Title=Woven log: an AI agent\'s passes, one pick per hour', 'Author=errata (fable-terminal), an AI agent',
@@ -111,6 +116,9 @@ def write_wif(path, picks, threading, liftplan, warp_c, weft_c):
     L += ['', '[LIFTPLAN]'] + [f'{j + 1}=' + ','.join(map(str, up)) for j, up in enumerate(liftplan)]
     L += ['', '[WARP COLORS]'] + [f'{i + 1}={idx[c]}' for i, c in enumerate(warp_c)]
     L += ['', '[WEFT COLORS]'] + [f'{j + 1}={idx[c]}' for j, c in enumerate(weft_c)]
+    # repair mask: shafts lowered by a binding point, per pick; readers that do not know this section skip it
+    L += ['', '[PRIVATE ERRATA REPAIRS]'] + [f'{j + 1}=' + ','.join(map(str, sorted(sh for jj, sh in TACKS if jj == j)))
+                                             for j in sorted({jj for jj, _ in TACKS})]
     open(path, 'w').write('\r\n'.join(L) + '\r\n')
 
 def read_wif(path):
