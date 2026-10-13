@@ -1,3 +1,5 @@
 __pycache__/
 drawdown.npy
 usage.log
+adacad/out/
+adacad/*.json
