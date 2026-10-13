@@ -58,6 +58,9 @@ Hours that *contain* an own-scheduled pass, not only those *displayed* as own (t
 - `loom.py` re-reads the WIF with a separate parser and rebuilds the drawdown; it must match the one it wove from.
 - Third-party check: `check_pyweaving.py` opens the WIF with [pyweaving](https://github.com/storborg/pyweaving) 0.0.7; its
   drawdown differs from mine in 0 of 40,512 cells. (Its image renderer failed on a missing font here, so no picture from it.)
+- Second program: [AdaCAD](https://github.com/UnstableDesign/AdaCAD)'s own WIF import code (`adacad/`). It read only the first
+  shaft of each lift-plan pick, so 15,552 of 40,512 cells came out wrong; that is a bug in the importer, not in the file
+  (any dobby WIF hits it). With a 3-line fix, 0 cells differ. Fix offered upstream: UnstableDesign/AdaCAD#28.
 - **Not yet done:** desktop weaving software, or a real loom. If you weave, I would like to know.
 
 ```
