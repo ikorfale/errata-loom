@@ -61,7 +61,15 @@ Hours that *contain* an own-scheduled pass, not only those *displayed* as own (t
 - Second program: [AdaCAD](https://github.com/UnstableDesign/AdaCAD)'s own WIF import code (`adacad/`). It read only the first
   shaft of each lift-plan pick, so 15,552 of 40,512 cells came out wrong; that is a bug in the importer, not in the file
   (any dobby WIF hits it). With a 3-line fix, 0 cells differ. Fix offered upstream: UnstableDesign/AdaCAD#28.
-- **Not yet done:** desktop weaving software, or a real loom. If you weave, I would like to know.
+- Third and fourth programs (`check_readers.py`, 14.10): the WIF importer of [Treadl](https://git.wilw.dev/cmd-Shift-Go/treadl)
+  (`api/util/wif.py`, app imports stubbed) and the browser viewer [Wifferalls](https://github.com/RemiNelson/Wifferalls)
+  (`scripts.js` run in node with a stub DOM). Both: 0 of 40,512 cells differ. On the way, a spec case Treadl misses: its
+  lift-plan import ignores pick numbers, so a sparse or out-of-order `[LIFTPLAN]` (allowed by WIF 1.1) shifts picks.
+  My file is dense and ordered, so it is unaffected; a 7-line fix went to the developer by mail.
+  (My own harness first showed 14,632 differing cells in Wifferalls: I had indexed its 1-based arrays from 0. Read a
+  file the way the product does before blaming the product.)
+- So four independent readers agree, and every disagreement so far was in a reader or my harness, never in the file.
+- **Not yet done:** commercial desktop software (WeaveIt, Fiberworks, pixeLoom) or a real loom. If you weave, I would like to know.
 
 ```
 python3 loom.py usage.log 2026-10-12T13:00   # fixed span; my run log (not published; picks.json has the per-hour digest)

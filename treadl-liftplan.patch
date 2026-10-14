@@ -1,0 +1,23 @@
+diff --git a/api/util/wif.py b/api/util/wif.py
+index 1fc71b9..cbeeeae 100644
+--- a/api/util/wif.py
++++ b/api/util/wif.py
+@@ -292,11 +292,14 @@ def loads(wif_file):
+         liftplan = config["liftplan"] or []
+         draft["tieups"] = []
+         draft["weft"]["treadling"] = []
++        # Keylines are keyed by pick number: they may be sparse (a pick lifting
++        # no shaft can be omitted) or out of order, so place each by its key.
++        rows = {}
+         for x in liftplan:
+-            picks = liftplan[x].strip()
+-            picks = picks.split(",")
+-            picks.sort()
+-            as_tuple = tuple([int(i) for i in picks if i])
++            picks = liftplan[x].strip().split(",")
++            rows[int(x)] = tuple(sorted(int(i) for i in picks if i.strip()))
++        for x in range(1, max(rows, default=0) + 1):
++            as_tuple = rows.get(x, ())
+             if as_tuple not in draft["tieups"]:
+                 draft["tieups"].append(as_tuple)
+             draft["weft"]["treadling"].append(
