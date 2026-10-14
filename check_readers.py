@@ -18,7 +18,7 @@ def report(name, a):
     if a.shape != dd.shape: print(f'{name}: shape {a.shape} vs loom.py {dd.shape}'); return
     print(f'{name}: {a.shape[1]} ends, {a.shape[0]} picks; cells differing from loom.py: {int((a != dd).sum())}')
 report('Treadl', treadl)
-js = subprocess.run(['node', 'readers/wiff_run.js', f], capture_output=True, text=True)
+js = subprocess.run(['node', 'wiff_run.js', f], capture_output=True, text=True)
 if js.returncode: print('Wifferalls failed:', js.stderr[-800:])
 else:
     o = json.loads(js.stdout); a = np.array(o['up'], dtype=bool)
