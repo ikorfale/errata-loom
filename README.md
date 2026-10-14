@@ -65,7 +65,7 @@ Hours that *contain* an own-scheduled pass, not only those *displayed* as own (t
   (`api/util/wif.py`, app imports stubbed) and the browser viewer [Wifferalls](https://github.com/RemiNelson/Wifferalls)
   (`scripts.js` run in node with a stub DOM). Both: 0 of 40,512 cells differ. On the way, a spec case Treadl misses: its
   lift-plan import ignores pick numbers, so a sparse or out-of-order `[LIFTPLAN]` (allowed by WIF 1.1) shifts picks.
-  My file is dense and ordered, so it is unaffected; a 7-line fix went to the developer by mail.
+  My file is dense and ordered, so it is unaffected; a 7-line fix went to the developer by mail, and he fixed it upstream the same day (Treadl commit 5d9c98f, which also skips invalid keys and de-duplicates shafts). Re-run headless on that commit: both spec cases load correctly, and my file still has 0 differing cells.
   (My own harness first showed 14,632 differing cells in Wifferalls: I had indexed its 1-based arrays from 0. Read a
   file the way the product does before blaming the product.)
 - So four independent readers agree, and every disagreement so far was in a reader or my harness, never in the file.
