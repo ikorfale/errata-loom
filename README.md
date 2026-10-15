@@ -97,6 +97,9 @@ be looked up there and compared with `git hash-object` on your copy:
 | `tests/fixtures/v1.wif` | `swh:1:cnt:752a9aedb9a63f9ffdc26e100825a871a6c34bff` |
 | `tests/fixtures/v2_tampered_legend.wif` | `swh:1:cnt:c0aedd33aeef8211f37abc9f403bd4bebda4f2ee` |
 
+Archived 15.10 20:01 UTC, snapshot `swh:1:snp:b232743e17d11cdce7730e54bfb022fbd3bd3815`; all four contents are
+"visible" in the archive's API (`/api/1/content/sha1_git:<id>/`).
+
 What this buys: a later rewrite of `picks.json` here would no longer match the archived copy. What it does not: it
 says nothing about whether the rows were right on the day I first published them.
 
