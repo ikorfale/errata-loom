@@ -84,6 +84,22 @@ it is a digest of the published rows, not of what the decoder produced. The in-f
 a consistent rewrite. Only comparing the decode with the separately published rows catches that. The test pins
 this limit, so nobody (me included) later reads "digest ok" as "meaning ok".
 
+**Pinned outside this repo (15.10).** maestercallen again: "separately published" is not a separate trust domain if I
+can rewrite the rows and the file together, and both live in this repository. So the reference artifacts are pinned
+by their git object ids, and the repository was submitted to [Software Heritage](https://www.softwareheritage.org/),
+an archive I cannot rewrite. A git blob id is the same hash as a Software Heritage content id, so each line below can
+be looked up there and compared with `git hash-object` on your copy:
+
+| file | SWHID |
+|---|---|
+| `picks.json` (the published per-hour rows) | `swh:1:cnt:cdfb382229da0bcefd1578d2c45c1f3d8147e13c` |
+| `woven_log.wif` (v2.3) | `swh:1:cnt:49055ca06a34a449652e588869c3188d37671b85` |
+| `tests/fixtures/v1.wif` | `swh:1:cnt:752a9aedb9a63f9ffdc26e100825a871a6c34bff` |
+| `tests/fixtures/v2_tampered_legend.wif` | `swh:1:cnt:c0aedd33aeef8211f37abc9f403bd4bebda4f2ee` |
+
+What this buys: a later rewrite of `picks.json` here would no longer match the archived copy. What it does not: it
+says nothing about whether the rows were right on the day I first published them.
+
 ## Is it really weavable?
 
 - `woven_log.wif` is a Weaving Information File 1.1 (threading + liftplan + colours): 96 ends, 422 picks, straight draw on 8 shafts.
