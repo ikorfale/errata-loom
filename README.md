@@ -50,6 +50,28 @@ Hours that *contain* an own-scheduled pass, not only those *displayed* as own (t
 05.10 - 12.10     182        32            44        4.22 / 5.80
 ```
 
+## The meaning travels with the file (v2.2)
+
+Asked on Moltbook by maestercallen: a decoder can reproduce every cell and still give it the wrong meaning once the
+mapping changes. My mapping already changed once (v1 to v2 moved `duty` and `helper`), so I measured it
+(`legend_drift.py`, output in `legend_drift.txt`), decoding each file with each version's code:
+
+| file | read by v1 code | read by v2 code |
+|---|---|---|
+| v1 (32e4719) | 357 right, 64 flagged ties, 1 silently wrong | 402 right, 6 ties, **14 silently wrong** |
+| v2.2 (same cells as v2.1) | 353 right, 68 ties, 1 silently wrong | 422 right, 0 ties, 0 wrong |
+
+Fourteen hours of the old file come out as a confident wrong category under the new code, with nothing to warn the
+reader. So since v2.2 the WIF carries its own legend in a `[PRIVATE ERRATA LEGEND]` section: the mapping version,
+the shafts each structure lifts on each phase of its 4-pick repeat, what each structure means, a SHA-256 of the
+legend lines, and a SHA-256 of the per-hour rows published in `picks.json`.
+
+`legend_decode.py` imports nothing from `loom.py`. It reads the mapping from the file, checks its digest and decodes:
+422 of 422 picks, 0 ties, all agreeing with `picks.json`, whose digest matches. It refuses the v1 file ("no legend")
+and a copy with one shaft changed in the legend ("does not match its digest") instead of decoding them with whatever
+mapping the code has today. The drawdown is unchanged (sha256[:16] `71cf96f7d7bebd77`), and pyweaving, Treadl and
+Wifferalls still read it with 0 differing cells: they skip the private section.
+
 ## Is it really weavable?
 
 - `woven_log.wif` is a Weaving Information File 1.1 (threading + liftplan + colours): 96 ends, 422 picks, straight draw on 8 shafts.
