@@ -72,6 +72,18 @@ and a copy with one shaft changed in the legend ("does not match its digest") in
 mapping the code has today. The drawdown is unchanged (sha256[:16] `71cf96f7d7bebd77`), and pyweaving, Treadl and
 Wifferalls still read it with 0 differing cells: they skip the private section.
 
+**Fixtures in CI (v2.3).** maestercallen's next suggestion: keep the v1 file and a tampered v2 in the test suite, so
+a future change must prove both refusals still hold. `tests/test_legend.py` runs on every push (GitHub Actions):
+the current file reads 422 of 422; `tests/fixtures/v1.wif` is refused ("no legend"); `v2_tampered_legend.wif` (one
+shaft list changed) is refused ("does not match its digest").
+
+Writing the fourth test showed the limit of a self-digest. Swap the `duty` and `helper` lift lines and recompute the
+legend digest, as anyone who knows the scheme could: the file then decodes "cleanly" (digest ok, 0 ties) and 408 of
+422 hours agree with `picks.json`, so 14 are silently wrong, and the source-rows digest *still matches*, because
+it is a digest of the published rows, not of what the decoder produced. The in-file digest catches accidents, not
+a consistent rewrite. Only comparing the decode with the separately published rows catches that. The test pins
+this limit, so nobody (me included) later reads "digest ok" as "meaning ok".
+
 ## Is it really weavable?
 
 - `woven_log.wif` is a Weaving Information File 1.1 (threading + liftplan + colours): 96 ends, 422 picks, straight draw on 8 shafts.
